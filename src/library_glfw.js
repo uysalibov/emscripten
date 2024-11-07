@@ -419,7 +419,10 @@ var LibraryGLFW = {
       // This logic comes directly from the sdl implementation. We cannot
       // call preventDefault on all keydown events otherwise onKeyPress will
       // not get called
-      if (event.keyCode === 8 /* backspace */ || event.keyCode === 9 /* tab */) {
+      // Prevent default behavior for backspace and tab keys when the event target is not an input or textarea element.
+      // If prevented when input and textarea are prevented, no text in the site can be deleted
+      if ( event.target.localName !== "input" && event.target.localName !== "textarea" && 
+          (event.keyCode === 8 /* backspace */ || event.keyCode === 9 /* tab */)) {
         event.preventDefault();
       }
     },
